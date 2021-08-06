@@ -1,0 +1,4 @@
+name: AutoBridge
+version: 1
+main: ml.bigtruck2.AutoBridge.AutoBridge
+api-version: 1.8

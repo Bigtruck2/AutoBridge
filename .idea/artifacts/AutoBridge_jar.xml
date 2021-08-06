@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AutoBridge:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AutoBridge_jar</output-path>
+    <root id="archive" name="AutoBridge.jar">
+      <element id="module-output" name="AutoBridge" />
+    </root>
+  </artifact>
+</component>
