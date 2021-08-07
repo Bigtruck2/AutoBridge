@@ -1,5 +1,6 @@
 package ml.bigtruck2.AutoBridge;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -8,6 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 public class BridgeRunnable {
+
     private int blocks;
     public void runnable(NmsArmorStand nmsArmorStand, Player player, Vector vector, AutoBridge autoBridge, int blockNum){
         blocks = blockNum;
@@ -18,20 +20,27 @@ public class BridgeRunnable {
                 armLoc.setY(nmsArmorStand.getEntLoc().getY()-1);
                 if(blocks <= 0){
                     cancel();
-                    nmsArmorStand.remove(player, nmsArmorStand.getEntId());
+                    for (Player player1 : Bukkit.getOnlinePlayers()) {
+                        nmsArmorStand.remove(player1, nmsArmorStand.getEntId());
+                    }
                 }else if(armLoc.getBlock().getType() == Material.AIR){
                     placeBlock(armLoc.getBlock());
-                    nmsArmorStand.move(player,vector);
+                    for (Player player1 : Bukkit.getOnlinePlayers()) {
+                        nmsArmorStand.move(player1, vector);
+                    }
                     blocks -= 1;
                 }else {
-                    nmsArmorStand.move(player,vector);
+                    for (Player player1 : Bukkit.getOnlinePlayers()) {
+                        nmsArmorStand.move(player1, vector);
+                    }
                 }
 
                 if(!nmsArmorStand.getEntLoc().add(vector.clone().multiply(3)).getBlock().getType().equals(Material.AIR) || !armLoc.add(vector.clone().multiply(3)).getBlock().getType().equals(Material.AIR)){
-                    System.out.println("crashed");
                     blocks = 0;
                     cancel();
-                    nmsArmorStand.remove(player, nmsArmorStand.getEntId());
+                    for (Player player1 : Bukkit.getOnlinePlayers()) {
+                        nmsArmorStand.remove(player1, nmsArmorStand.getEntId());
+                    }
                 }
             }
         }.runTaskTimer(autoBridge,0,1);

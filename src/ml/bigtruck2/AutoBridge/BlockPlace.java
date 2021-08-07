@@ -3,18 +3,15 @@ package ml.bigtruck2.AutoBridge;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 public class BlockPlace implements Listener {
     private final AutoBridge autoBridge;
-    private int blocks;
     public BlockPlace(AutoBridge autoBridge){
         this.autoBridge = autoBridge;
     }
@@ -43,7 +40,14 @@ public class BlockPlace implements Listener {
                     for (Player player1 : Bukkit.getOnlinePlayers()) {
                         nmsArmorStand.show(player1, e.getItemInHand().getDurability());
                     }
-
+                    Location armLoc = nmsArmorStand.getEntLoc();
+                    armLoc.setY(nmsArmorStand.getEntLoc().getY()-1);
+                    if(!nmsArmorStand.getEntLoc().add(vector.clone().multiply(3)).getBlock().getType().equals(Material.AIR) || !armLoc.add(vector.clone().multiply(3)).getBlock().getType().equals(Material.AIR)){
+                        for (Player player1 : Bukkit.getOnlinePlayers()) {
+                            nmsArmorStand.remove(player1, nmsArmorStand.getEntId());
+                        }
+                        return;
+                    }
                     BridgeRunnable bridgeRunnable = new BridgeRunnable();
                     if (e.getItemInHand().getDurability() == 2) {
                         bridgeRunnable.runnable(nmsArmorStand, player, vector, autoBridge, 8);
