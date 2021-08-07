@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class AutoBridge extends JavaPlugin {
     @Override
     public void onEnable() {
+        Config config = new Config(this);
         Bukkit.getServer().getPluginManager().registerEvents(new BlockPlace(this),this);
     }
 

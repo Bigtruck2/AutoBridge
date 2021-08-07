@@ -33,7 +33,7 @@ public class BlockPlace implements Listener {
                     location.setX(location.getX() + .5);
                     location.setZ(location.getZ() + .5);
                     Vector vector = location.toVector().subtract(loc.toVector()).normalize();
-                    vector.multiply(.5);
+                    vector.multiply(autoBridge.getConfig().getDouble("speed"));
 
                     NmsArmorStand nmsArmorStand = new NmsArmorStand(player);
                     nmsArmorStand.spawn(e.getBlock().getLocation(), vector, e.getPlayer());
