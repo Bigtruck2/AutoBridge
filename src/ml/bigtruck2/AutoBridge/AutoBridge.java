@@ -7,7 +7,6 @@ public class AutoBridge extends JavaPlugin {
     @Override
     public void onEnable() {
         Bukkit.getServer().getPluginManager().registerEvents(new BlockPlace(this),this);
-        Bukkit.getServer().getPluginManager().registerEvents(new FireBurnStop(),this);
     }
 
     @Override
