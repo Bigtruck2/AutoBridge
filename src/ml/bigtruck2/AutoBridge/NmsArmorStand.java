@@ -20,7 +20,11 @@ public class NmsArmorStand {
     public void spawn(Location loc,Vector vector,Player player){
         WorldServer worldServer = ((CraftWorld) this.player.getLocation().getWorld()).getHandle();
         entity = new EntityArmorStand(worldServer);
-        entity.setLocation(loc.getX()+.5, loc.getY()-1.35, loc.getZ()+.5, player.getLocation().getYaw(), 0);
+        double doublePi = 2 * Math.PI;
+        double yawAtan = Math.atan2(-vector.getX(), vector.getZ());
+        double yaw = Math.toDegrees((yawAtan + doublePi) % doublePi);
+        entity.setLocation(loc.getX()+.5, loc.getY()-1.35, loc.getZ()+.5, (float) yaw, 0);
+
         entity.setInvisible(true);
         entLoc = new Location(entity.getWorld().getWorld(), entity.locX,entity.locY+1.35,entity.locZ, entity.yaw,0);
         entId = entity.getId();
@@ -42,8 +46,10 @@ public class NmsArmorStand {
     public void move(Player player, Vector vector){
         PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
 
-        playerConnection.sendPacket(new PacketPlayOutEntity.PacketPlayOutRelEntityMove(entity.getId(), (byte) ((int) (vector.getX() * 32.0D)), (byte)(0), (byte)((int) (vector.getZ() * 32.0D)),false));
-        entLoc.add(vector.getX(), 0, vector.getZ());
+        playerConnection.sendPacket(new PacketPlayOutEntity.PacketPlayOutRelEntityMove(entity.getId(), (byte) (vector.getX() * 32.0D), (byte)(0), (byte) (vector.getZ() * 32.0D),false));
+        int x = (int) (vector.getX()*32.0D);
+        int z = (int) (vector.getZ()*32.0D);
+        entLoc.add(x / 32.0D, 0, z / 32.0D);
     }
 
     public Location getEntLoc() {

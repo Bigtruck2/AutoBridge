@@ -35,7 +35,7 @@ public class BridgeRunnable {
                     }
                 }
 
-                if(!nmsArmorStand.getEntLoc().add(vector.clone().multiply(3)).getBlock().getType().equals(Material.AIR) || !armLoc.add(vector.clone().multiply(3)).getBlock().getType().equals(Material.AIR)){
+                if(!nmsArmorStand.getEntLoc().add(vector.clone().normalize().multiply(1.5)).getBlock().getType().equals(Material.AIR) || !armLoc.add(vector.clone().normalize().multiply(1.5)).getBlock().getType().equals(Material.AIR)){
                     blocks = 0;
                     cancel();
                     for (Player player1 : Bukkit.getOnlinePlayers()) {
