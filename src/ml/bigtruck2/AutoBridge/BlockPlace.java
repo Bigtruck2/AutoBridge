@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
 public class BlockPlace implements Listener {
@@ -23,7 +24,6 @@ public class BlockPlace implements Listener {
 
                     Player player = e.getPlayer();
                     e.setCancelled(true);
-
 
                     Location location = e.getBlock().getLocation();
                     location.setY(location.getY() - 1.35);

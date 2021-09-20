@@ -47,6 +47,9 @@ public class NmsArmorStand {
         PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
 
         playerConnection.sendPacket(new PacketPlayOutEntity.PacketPlayOutRelEntityMove(entity.getId(), (byte) (vector.getX() * 32.0D), (byte)(0), (byte) (vector.getZ() * 32.0D),false));
+
+    }
+    public void serverMove(Vector vector){
         int x = (int) (vector.getX()*32.0D);
         int z = (int) (vector.getZ()*32.0D);
         entLoc.add(x / 32.0D, 0, z / 32.0D);

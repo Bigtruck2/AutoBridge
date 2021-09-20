@@ -28,11 +28,13 @@ public class BridgeRunnable {
                     for (Player player1 : Bukkit.getOnlinePlayers()) {
                         nmsArmorStand.move(player1, vector);
                     }
+                    nmsArmorStand.serverMove(vector);
                     blocks -= 1;
                 }else {
                     for (Player player1 : Bukkit.getOnlinePlayers()) {
                         nmsArmorStand.move(player1, vector);
                     }
+                    nmsArmorStand.serverMove(vector);
                 }
 
                 if(!nmsArmorStand.getEntLoc().add(vector.clone().normalize().multiply(1.5)).getBlock().getType().equals(Material.AIR) || !armLoc.add(vector.clone().normalize().multiply(1.5)).getBlock().getType().equals(Material.AIR)){
