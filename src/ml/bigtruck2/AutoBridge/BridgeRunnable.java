@@ -3,6 +3,7 @@ package ml.bigtruck2.AutoBridge;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -24,7 +25,7 @@ public class BridgeRunnable {
                         nmsArmorStand.remove(player1, nmsArmorStand.getEntId());
                     }
                 }else if(armLoc.getBlock().getType() == Material.AIR){
-                    placeBlock(armLoc.getBlock());
+                    placeBlock(armLoc.getBlock(),player,nmsArmorStand,autoBridge);
                     for (Player player1 : Bukkit.getOnlinePlayers()) {
                         nmsArmorStand.move(player1, vector);
                     }
@@ -47,7 +48,8 @@ public class BridgeRunnable {
             }
         }.runTaskTimer(autoBridge,0,1);
     }
-    public void placeBlock(Block block){
-        block.setType(Material.STAINED_CLAY);
+    public void placeBlock(Block block, Player player, NmsArmorStand nmsArmorStand, AutoBridge autoBridge){
+        player.playSound(nmsArmorStand.getEntLoc(), Sound.valueOf(autoBridge.getConfig().getString("sounds.bridger-move")),1,1);
+        block.setType(Material.valueOf(autoBridge.getConfig().getString("Blocks.block")));
     }
 }

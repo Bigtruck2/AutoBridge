@@ -35,7 +35,7 @@ public class BlockPlace implements Listener {
                     Vector vector = location.toVector().subtract(loc.toVector()).normalize();
                     vector.multiply(autoBridge.getConfig().getDouble("speed"));
 
-                    NmsArmorStand nmsArmorStand = new NmsArmorStand(player);
+                    NmsArmorStand nmsArmorStand = new NmsArmorStand(player, autoBridge);
                     nmsArmorStand.spawn(e.getBlock().getLocation(), vector, e.getPlayer());
                     for (Player player1 : Bukkit.getOnlinePlayers()) {
                         nmsArmorStand.show(player1, e.getItemInHand().getDurability());

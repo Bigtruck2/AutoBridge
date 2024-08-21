@@ -1,1 +1,27 @@
-speed: .5
+speed: 0.5
+Blocks: # amount of the blocks
+  tier1: 8
+  tier2: 24
+  block: STAINED_CLAY
+  return: "§fBR §7|  §f§oYour Bridger was returned!"
+skins: #the moving head (when u place the head)
+  default-tier1: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWE4MGY4NDZlYWY0MmQwYzE2YmYwN2FjYjdiMDYwYmRiMmZlZTUxNTQxN2I1ZGQ4MzlkZGNhMzkxNjhhYmExNiJ9fX0"
+  default-tier2: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmZiZTdlZmFjMGJhZmE5NDRmNjU5NGNiNWYxNWYyZDBkNTEzMmE4MmY2ODdjMjg0ZTIyYzQ4MDBiOTE5YWZhZiJ9fX0"
+  dog: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjYyNTVkNGNkZmMxZTJlMGZjZjkwOGJjYTNhYTRmZjA5YzIxNmY3NzRjMTY4MGViYTMxZGYwYTAwNzUyMGMzMyJ9fX0="
+  bee: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODg2YTUwOWZmM2NkNDcxZjFiNDI4YTE5NGI2NzExNDcwYTU0NzczZTVkZTZlZTA3ZjdlNjAxY2M1ZTc1YTIwMCJ9fX0="
+sounds:
+  bridger-move: NOTE_BASS
+  bridger-finish: FIZZ
+lore:
+  - "§fGenerates a bridge in the direction you were looking."
+  - "<blocks>"
+name-tier1:
+  formatted: "§7§lTIER §f§l1"
+  unformatted: "TIER 1"
+name-tier2:
+  formatted: "§7§lTIER §6§l2"
+  unformatted: "TIER 2"
+
+Hologram: 1 #1 for true 0 for false
+Hologram-text:
+  Blocks: "§7<blocks>"

@@ -3,6 +3,7 @@ package ml.bigtruck2.AutoBridge;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
@@ -14,8 +15,10 @@ public class NmsArmorStand {
     private EntityArmorStand entity;
     private Location entLoc;
     private int entId;
-    public NmsArmorStand(Player player){
+    private AutoBridge autoBridge;
+    public NmsArmorStand(Player player, AutoBridge autoBridge){
         this.player = player;
+        this.autoBridge = autoBridge;
     }
     public void spawn(Location loc,Vector vector,Player player){
         WorldServer worldServer = ((CraftWorld) this.player.getLocation().getWorld()).getHandle();
@@ -34,9 +37,14 @@ public class NmsArmorStand {
         itemStack.setDurability(dur);
         ItemStack itemStack1 = CraftItemStack.asNMSCopy(itemStack);
         PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
-        playerConnection.sendPacket(new PacketPlayOutSpawnEntityLiving(entity));
 
+        playerConnection.sendPacket(new PacketPlayOutSpawnEntityLiving(entity));
         playerConnection.sendPacket(new PacketPlayOutEntityEquipment(entity.getId(),4,itemStack1));
+
+        DataWatcher dataWatcher = entity.getDataWatcher();
+        dataWatcher.watch(2, autoBridge.getConfig().getString("Hologram-text.Blocks"));
+        dataWatcher.watch(3, (byte) autoBridge.getConfig().getInt("Hologram"));
+        playerConnection.sendPacket(new PacketPlayOutEntityMetadata(entId, dataWatcher, true));
     }
     public void remove(Player player, int entId){
         PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
@@ -45,7 +53,7 @@ public class NmsArmorStand {
     }
     public void move(Player player, Vector vector){
         PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
-
+        player.playSound(entLoc, Sound.valueOf(autoBridge.getConfig().getString("sounds.bridger-move")),1,1);
         playerConnection.sendPacket(new PacketPlayOutEntity.PacketPlayOutRelEntityMove(entity.getId(), (byte) (vector.getX() * 32.0D), (byte)(0), (byte) (vector.getZ() * 32.0D),false));
 
     }

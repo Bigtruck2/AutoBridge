@@ -8,6 +8,7 @@ public class AutoBridge extends JavaPlugin {
     public void onEnable() {
         Config config = new Config(this);
         Bukkit.getServer().getPluginManager().registerEvents(new BlockPlace(this),this);
+        getServer().getPluginManager().registerEvents(new ItemPickupListener(this), this);
     }
 
     @Override
