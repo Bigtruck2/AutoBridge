@@ -41,7 +41,7 @@ public class BlockPlace implements Listener {
                     NmsArmorStand nmsArmorStand = new NmsArmorStand(player, autoBridge);
                     nmsArmorStand.spawn(e.getBlock().getLocation(), vector, e.getPlayer());
                     for (Player player1 : Bukkit.getOnlinePlayers()) {
-                        nmsArmorStand.show(player1, blocks);
+                        nmsArmorStand.show(player1, blocks, NBTUtil.getCustomTag(e.getItemInHand(),"tier"));
                     }
                     Location armLoc = nmsArmorStand.getEntLoc();
                     armLoc.setY(nmsArmorStand.getEntLoc().getY()-1);

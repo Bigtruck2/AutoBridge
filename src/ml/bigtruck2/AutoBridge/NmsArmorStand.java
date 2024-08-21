@@ -38,9 +38,10 @@ public class NmsArmorStand {
         dataWatcher.watch(2, autoBridge.getConfig().getString("Hologram-text.Blocks").replace("<blocks>",String.valueOf(blocks)));
         playerConnection.sendPacket(new PacketPlayOutEntityMetadata(entId, dataWatcher, true));
     }
-    public void show(Player player, int blocks){
+    public void show(Player player, int blocks, int tier){
         org.bukkit.inventory.ItemStack itemStack = new org.bukkit.inventory.ItemStack(Material.SKULL_ITEM);
         itemStack.setDurability((short) 3);
+        NBTUtil.setHeadSkin(itemStack,player, tier,autoBridge);
         ItemStack itemStack1 = CraftItemStack.asNMSCopy(itemStack);
         PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
 
@@ -59,7 +60,6 @@ public class NmsArmorStand {
     }
     public void move(Player player, Vector vector){
         PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
-        player.playSound(entLoc, Sound.valueOf(autoBridge.getConfig().getString("sounds.bridger-move")),1,1);
         playerConnection.sendPacket(new PacketPlayOutEntity.PacketPlayOutRelEntityMove(entity.getId(), (byte) (vector.getX() * 32.0D), (byte)(0), (byte) (vector.getZ() * 32.0D),false));
 
     }

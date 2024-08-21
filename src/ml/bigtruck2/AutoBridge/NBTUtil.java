@@ -2,10 +2,10 @@ package ml.bigtruck2.AutoBridge;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import com.sun.org.apache.xerces.internal.xs.StringList;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -31,7 +31,8 @@ public class NBTUtil {
         }
         return 0;
     }
-    public static void setHeadSkin(ItemStack head, String base64) {
+    public static void setHeadSkin(ItemStack head, Player player, int tier, AutoBridge autoBridge) {
+
         if (head.getType() != Material.SKULL_ITEM) {
             throw new IllegalArgumentException("ItemStack must be a skull.");
         }
@@ -46,7 +47,7 @@ public class NBTUtil {
             Field profileField = meta.getClass().getDeclaredField("profile");
             profileField.setAccessible(true);
             GameProfile profile = new GameProfile(UUID.randomUUID(), null);
-            profile.getProperties().put("textures", new Property("textures", base64));
+            profile.getProperties().put("textures", new Property("textures", getSkin(player, tier, autoBridge)));
             profileField.set(meta, profile);
             head.setItemMeta(meta);
         } catch (Exception e) {
@@ -59,5 +60,12 @@ public class NBTUtil {
             list.add(lore.replaceAll("<blocks>", String.valueOf(blocks)));
         }
         return list;
+    }
+    public static String getSkin(Player player, int tier, AutoBridge autoBridge){
+        String replacer = autoBridge.getCustomConfig().getString(player.getName()+".tier"+tier);
+        if (replacer.isEmpty()){
+            replacer=autoBridge.getConfig().getString("skins.default-tier"+tier);
+        }
+        return replacer;
     }
 }

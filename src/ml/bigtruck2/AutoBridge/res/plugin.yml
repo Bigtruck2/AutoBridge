@@ -2,3 +2,8 @@ name: AutoBridge
 version: 1
 main: ml.bigtruck2.AutoBridge.AutoBridge
 api-version: 1.8
+commands:
+  bridge:
+    description: bridge commands
+    usage: /bridge <tier (1 or 2)> <skin name> <player name>
+    permission: "bPermissions.reload"
