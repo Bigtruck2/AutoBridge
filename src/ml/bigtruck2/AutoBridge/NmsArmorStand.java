@@ -32,9 +32,15 @@ public class NmsArmorStand {
         entLoc = new Location(entity.getWorld().getWorld(), entity.locX,entity.locY+1.35,entity.locZ, entity.yaw,0);
         entId = entity.getId();
     }
-    public void show(Player player, short dur){
+    public void name(Player player, int blocks){
+        PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
+        DataWatcher dataWatcher = entity.getDataWatcher();
+        dataWatcher.watch(2, autoBridge.getConfig().getString("Hologram-text.Blocks").replace("<blocks>",String.valueOf(blocks)));
+        playerConnection.sendPacket(new PacketPlayOutEntityMetadata(entId, dataWatcher, true));
+    }
+    public void show(Player player, int blocks){
         org.bukkit.inventory.ItemStack itemStack = new org.bukkit.inventory.ItemStack(Material.SKULL_ITEM);
-        itemStack.setDurability(dur);
+        itemStack.setDurability((short) 3);
         ItemStack itemStack1 = CraftItemStack.asNMSCopy(itemStack);
         PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
 
@@ -42,7 +48,7 @@ public class NmsArmorStand {
         playerConnection.sendPacket(new PacketPlayOutEntityEquipment(entity.getId(),4,itemStack1));
 
         DataWatcher dataWatcher = entity.getDataWatcher();
-        dataWatcher.watch(2, autoBridge.getConfig().getString("Hologram-text.Blocks"));
+        dataWatcher.watch(2, autoBridge.getConfig().getString("Hologram-text.Blocks").replace("<blocks>",String.valueOf(blocks)));
         dataWatcher.watch(3, (byte) autoBridge.getConfig().getInt("Hologram"));
         playerConnection.sendPacket(new PacketPlayOutEntityMetadata(entId, dataWatcher, true));
     }

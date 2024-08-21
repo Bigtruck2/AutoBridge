@@ -19,9 +19,12 @@ public class BlockPlace implements Listener {
     @EventHandler
     public void blockPlace(BlockPlaceEvent e){
         if(e.getBlockPlaced().getType() == Material.SKULL){
-            if (e.getItemInHand().getDurability() == 2||e.getItemInHand().getDurability() == 4) {
+            if (e.getItemInHand().getDurability() == 3) {
                 if (e.getBlock().getRelative(BlockFace.DOWN).equals(e.getBlockAgainst())) {
-
+                    int blocks = NBTUtil.getCustomTag(e.getItemInHand(),"blocks");
+                    if( blocks==0) {
+                        return;
+                    }
                     Player player = e.getPlayer();
                     e.setCancelled(true);
 
@@ -38,7 +41,7 @@ public class BlockPlace implements Listener {
                     NmsArmorStand nmsArmorStand = new NmsArmorStand(player, autoBridge);
                     nmsArmorStand.spawn(e.getBlock().getLocation(), vector, e.getPlayer());
                     for (Player player1 : Bukkit.getOnlinePlayers()) {
-                        nmsArmorStand.show(player1, e.getItemInHand().getDurability());
+                        nmsArmorStand.show(player1, blocks);
                     }
                     Location armLoc = nmsArmorStand.getEntLoc();
                     armLoc.setY(nmsArmorStand.getEntLoc().getY()-1);
@@ -49,11 +52,9 @@ public class BlockPlace implements Listener {
                         return;
                     }
                     BridgeRunnable bridgeRunnable = new BridgeRunnable();
-                    if (e.getItemInHand().getDurability() == 2) {
-                        bridgeRunnable.runnable(nmsArmorStand, player, vector, autoBridge, 8);
-                    }else if(e.getItemInHand().getDurability() == 4){
-                        bridgeRunnable.runnable(nmsArmorStand, player, vector, autoBridge, 16);
-                    }
+                        bridgeRunnable.runnable(nmsArmorStand, player, vector, autoBridge, blocks, NBTUtil.getCustomTag(e.getItemInHand(),"tier"));
+
+
                     if(player.getItemInHand().getAmount() > 1) {
                         player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
                     }else {
